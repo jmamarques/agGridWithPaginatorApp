@@ -1,0 +1,16 @@
+<div style="height: 500px;">
+  <ag-grid-angular
+    style="width: 100%; height: 100%;"
+    class="ag-theme-alpine"
+    [gridOptions]="gridOptions"
+    [rowData]="rowData"
+    (gridReady)="gridReady($event)"
+  >
+  </ag-grid-angular>
+</div>
+<mat-paginator [pageIndex]="pageIndex"
+               [pageSize]="pageSize"
+               [pageSizeOptions]="[10, 25, 50]"
+               (page)="handlePageEvent($event)"
+               [length]="total"
+               showFirstLastButtons></mat-paginator>
