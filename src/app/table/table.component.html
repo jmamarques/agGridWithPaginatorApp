@@ -5,6 +5,7 @@
     [gridOptions]="gridOptions"
     [rowData]="rowData"
     (gridReady)="gridReady($event)"
+    (rowClicked)="log($event, 'r')"
   >
   </ag-grid-angular>
 </div>

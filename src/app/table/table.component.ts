@@ -20,18 +20,29 @@ export class TableComponent implements OnInit {
   constructor() {
     this.gridOptions = <GridOptions>{
       pagination: false,
+      animateRows: true,
+      enableCellChangeFlash: true,
+      suppressAggFuncInHeader: true,
       columnDefs: [
         {headerName: 'ID', field: 'id'},
         {headerName: 'First Name', field: 'firstName'},
         {headerName: 'Last Name', field: 'lastName'},
-        {headerName: 'Department', field: 'department'},
+        {headerName: 'Department', field: 'department', cellRenderer: 'translateFormatter'},
         {headerName: 'Salary', field: 'salary'},
         {headerName: 'Hire Date', field: 'hireDate', cellRenderer: 'dateFormatter'},
       ],
+      defaultColDef: {
+        valueGetter: params => {
+          return "Another Solution: " + params.data[params.colDef.field || '']
+        }
+      },
       components: {
         dateFormatter: function (params: { value: string | number | Date; }) {
           const date = new Date(params.value);
           return date.toLocaleDateString();
+        },
+        translateFormatter: function (params: { value: string | number | Date; }) {
+          return "translate:" + params.value;
         },
       }
     };
@@ -60,5 +71,10 @@ export class TableComponent implements OnInit {
   gridReady(gridReadyEvent: GridReadyEvent<any>) {
     this.gridApi = gridReadyEvent.api;
     this.rowData = mockEmployees.slice(0, this.pageSize); // You should populate this array with your data
+  }
+
+  log(action: any, event: string) {
+    console.log(event + ": ")
+    console.log(action)
   }
 }
