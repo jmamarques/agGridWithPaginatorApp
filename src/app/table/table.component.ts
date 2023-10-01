@@ -24,10 +24,10 @@ export class TableComponent implements OnInit {
       enableCellChangeFlash: true,
       suppressAggFuncInHeader: true,
       columnDefs: [
-        {headerName: 'ID', field: 'id'},
-        {headerName: 'First Name', field: 'firstName'},
+        {headerName: 'ID', field: 'id', sortable: true, lockPinned: true},
+        {headerName: 'First Name', field: 'firstName', floatingFilter: true, filter: 'agTextColumnFilter'},
         {headerName: 'Last Name', field: 'lastName'},
-        {headerName: 'Department', field: 'department', cellRenderer: 'translateFormatter'},
+        {headerName: 'Department', field: 'department', cellRenderer: 'translateFormatter', wrapText: true, width: '100px', },
         {headerName: 'Salary', field: 'salary'},
         {headerName: 'Hire Date', field: 'hireDate', cellRenderer: 'dateFormatter'},
       ],
@@ -76,5 +76,13 @@ export class TableComponent implements OnInit {
   log(action: any, event: string) {
     console.log(event + ": ")
     console.log(action)
+  }
+
+
+  onFilterTextBoxChanged() {
+    this.rowData = mockEmployees.filter(value => value.firstName.startsWith((document.getElementById('filter-text-box') as HTMLInputElement).value))
+    // this.gridApi.setQuickFilter(
+    //   (document.getElementById('filter-text-box') as HTMLInputElement).value
+    // );
   }
 }
